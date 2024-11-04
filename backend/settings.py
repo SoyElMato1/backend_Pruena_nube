@@ -28,12 +28,13 @@ OPENAI_API_KEY = 'sk-proj-rZv0zMFrE-LeYKGkMUO_xBq3fnQHoQjKa1VmNTiBMgvlDqvMTZSHaV
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-eq0gx0&ri!hd1u6($cei%qa=gr^^i1#s2i4&e#dzue9nlpw6l_'
+# SECRET_KEY = 'django-insecure-eq0gx0&ri!hd1u6($cei%qa=gr^^i1#s2i4&e#dzue9nlpw6l_'
+SECRET_KEY = os.getenv('SECRET_KEY', 'clave-secreta-defecto')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '*').split(',')
 
 
 # Application definition
@@ -97,7 +98,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(conn_max_age=600)
+    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
     # 'default': {
     #     'ENGINE': 'django.db.backends.mysql',
     #     'HOST': 'localhost',
